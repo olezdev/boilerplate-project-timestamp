@@ -1,11 +1,12 @@
 const express = require('express');
-const app = express();
-
 const cors = require('cors');
+const path = require('path')
+
+const app = express();
 app.use(cors({ optionsSuccessStatus: 200 }));  // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')))
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", (req, res) => {
@@ -19,7 +20,7 @@ app.get("/api/hello", (req, res) => {
 
 app.get("/api/:date?", (req, res) => {
   const { date } = req.params;
-  console.log(date)
+  // console.log(date)
 
   if (!date || date.trim() === '') {
     const currentDate = new Date();
@@ -51,6 +52,6 @@ app.get("/api/:date?", (req, res) => {
 // listen for requests :)
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, function () {
+app.listen(PORT, () => {
   console.log(`Your app is listening on port ${PORT}`);
 });
